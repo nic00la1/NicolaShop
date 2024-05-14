@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Product } from '../../../Modules/Product';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-produkt',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './produkt.component.html',
   styleUrl: './produkt.component.css'
 })
