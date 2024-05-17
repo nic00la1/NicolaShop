@@ -14,9 +14,10 @@
             <div class="col-sm">
                 <p>Ilość: </p>
           <input type="number" class="form-control" style="max-width: 200px;"/>
-                <button class="btn btn-primary mt-3">Dodaj do koszyka</button>
+                <button (click)="addToCart(product)" class="btn btn-primary mt-3">Dodaj do koszyka</button>
+                <button (click)="removeFromCart(product)" class="btn btn-danger mt-3">Usuń z koszyka</button>
             </div>
-        </div>    
+        </div>
     </div>
     }
 
@@ -41,10 +42,10 @@
                 ">{{product.id}}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }} zł</td>
-                <td>{{ product.quantityInStock }}</td>
-                <td>{{ product.price * product.quantityInStock }} zł</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.price * product.stock }} zł</td>
             }
-            
+
         </tbody>
 
     </table>

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { Product } from '../../../Modules/Product';
 import { CommonModule } from '@angular/common';
+import {CartService} from "../../../services/cart.service";
 
 @Component({
   selector: 'app-produkt',
@@ -15,4 +16,18 @@ export class ProduktComponent {
       new Product(2, 'Klawiatura Asus', 300, 'https://delkom.pl/pic3/9CEA/352168/klawiatura-mechaniczna-asus-rog-falchion-ace-90mp0346-bkua11-nx-red-rgb-compact-biala-png-720x.png', 15),
       new Product(3, 'Myszka Razer', 250, 'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_107701201?x=320&y=320&format=jpg&quality=80&sp=yes&strip=yes&trim&ex=320&ey=320&align=center&resizesource&unsharp=1.5x1+0.7+0.02&cox=0&coy=0&cdx=320&cdy=320', 5),
   ]
+
+  cartService = inject(CartService);
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+  }
+
+  removeFromCart(product: Product) {
+    this.cartService.removeFromCart(product);
+  }
+
+  getTotal() {
+    return this.cartService.getTotal();
+  }
 }
