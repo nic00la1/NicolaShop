@@ -1,0 +1,47 @@
+<div class="container" style="margin-top: 80px">
+  <h2>Zawartość koszyka</h2>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Lp.</th>
+      <th scope="col">Produkt</th>
+      <th scope="col">Cena jednostkowa</th>
+      <th scope="col">Ilość</th>
+      <th scope="col">Cena całkowita</th>
+      <th scope="col">Akcja</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (item of cartItems; track $index) {
+        <tr>
+          <th scope="row">{{ $index + 1 }}</th>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.product.price }} zł</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.product.price * item.quantity }} zł</td>
+          <td>
+            <button (click)="removeFromCart(item.product)" class="btn btn-danger">Usuń</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (cartItems.length === 0) {
+    <p class="text-danger fw-bold">Koszyk jest pusty!</p>
+  } @else {
+    <div class="row">
+      <div class="col-6">
+        <h3>Podsumowanie</h3>
+        <p>Wartość koszyka: {{ cartValue }} zł</p>
+      </div>
+      <div class="col-6">
+        <button (click)="clearCart()" class="btn btn-danger">Wyczyść koszyk</button>
+        <button (click)="checkout()" class="btn btn-success">Zamów</button>
+      </div>
+    </div>
+  }
+
+
+
