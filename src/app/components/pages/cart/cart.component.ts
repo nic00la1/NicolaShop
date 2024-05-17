@@ -17,8 +17,8 @@ export class CartComponent {
     this.cartItems = this.cartService.getCart();
   }
 
-  removeFromCart(product: Product) {
-    this.cartService.removeFromCart(product);
+  removeFromCart(item: CartItem) {
+    this.cartService.removeFromCart(item);
   }
 
   cartValue() {

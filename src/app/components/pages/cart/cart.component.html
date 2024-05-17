@@ -21,7 +21,7 @@
           <td>{{ item.quantity }}</td>
           <td>{{ item.product.price * item.quantity }} zł</td>
           <td>
-            <button (click)="removeFromCart(item.product)" class="btn btn-danger">Usuń</button>
+            <button (click)="removeFromCart(item)" class="btn btn-danger">Usuń</button>
           </td>
         </tr>
       }
@@ -42,6 +42,6 @@
       </div>
     </div>
   }
-
+</div>
 
 

@@ -8,28 +8,24 @@ import {CartItem} from "../Shared/Interfaces/cart-item";
 export class CartService {
   cart: CartItem[] = []; // Array of cart items
 
-  addToCart(product: Product) {
+  addToCart(product: Product, quantity: number) {
     const item = this.cart.find(item => item.product.id === product.id);
-    if (product.stock > 0) {
+    if (product.stock > quantity) {
       if (item) {
-        item.quantity++;
+        item.quantity += quantity;
       } else {
-        this.cart.push({ product, quantity: 1 });
+        this.cart.push({ product, quantity });
       }
       console.log(`Produkt: ${product.name} dodany do koszyka`);
-      product.stock--;
+      product.stock -= quantity;
     }
   }
 
-  removeFromCart(product: Product) {
-    const item = this.cart.find(item => item.product.id === product.id);
-    if (item) {
-      item.quantity--;
-      if (item.quantity === 0) {
-        const index = this.cart.indexOf(item);
-        this.cart.splice(index, 1);
-      }
-      product.stock++;
+  removeFromCart(item: CartItem) {
+    const index = this.cart.indexOf(item);
+    if (index > -1) {
+      this.cart.splice(index, 1);
+      item.product.stock += item.quantity;
     }
   }
 
