@@ -15,5 +15,4 @@ cartService = inject(CartService);
 getCart() {
   return this.cartService.getCart();
 }
-
 }

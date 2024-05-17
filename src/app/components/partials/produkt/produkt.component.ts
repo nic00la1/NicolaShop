@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import { Product } from '../../../Modules/Product';
+import { Product } from '../../../Shared/Modules/Product';
 import { CommonModule } from '@angular/common';
 import {CartService} from "../../../services/cart.service";
 
