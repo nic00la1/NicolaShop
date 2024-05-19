@@ -11,3 +11,8 @@
   top: 20px;
   color: blue;
 }
+
+a {
+  color: white;
+  text-decoration: none;
+}
