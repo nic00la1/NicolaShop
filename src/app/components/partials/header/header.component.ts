@@ -1,18 +1,30 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {CartService} from "../../../services/cart.service";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-cartService = inject(CartService);
+export class HeaderComponent implements OnInit {
 
-getTotal() {
-  return this.cartService.getTotal();
-}
+  public totalItem : number = 0;
+  public searchTerm !: string;
+  constructor(private cartService : CartService) { }
+
+  ngOnInit(): void {
+    this.cartService.getProducts()
+      .subscribe(res=>{
+        this.totalItem = res.length;
+      })
+  }
+  search(event:any){
+    this.searchTerm = (event.target as HTMLInputElement).value;
+    console.log(this.searchTerm);
+    this.cartService.search.next(this.searchTerm);
+  }
 }

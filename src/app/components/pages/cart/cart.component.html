@@ -1,47 +1,60 @@
-<div class="container" style="margin-top: 80px">
-  <h2>Zawartość koszyka</h2>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">Lp.</th>
-      <th scope="col">Produkt</th>
-      <th scope="col">Cena jednostkowa</th>
-      <th scope="col">Ilość</th>
-      <th scope="col">Cena całkowita</th>
-      <th scope="col">Akcja</th>
-    </tr>
-    </thead>
-    <tbody>
-      @for (item of cartItems; track $index) {
-        <tr>
-          <th scope="row">{{ $index + 1 }}</th>
-          <td>{{ item.product.name }}</td>
-          <td>{{ item.product.price }} zł</td>
-          <td>{{ item.quantity }}</td>
-          <td>{{ item.product.price * item.quantity }} zł</td>
-          <td>
-            <button (click)="removeFromCart(item)" class="btn btn-danger">Usuń</button>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-
-  @if (cartItems.length === 0) {
-    <p class="text-danger fw-bold">Koszyk jest pusty!</p>
-  } @else {
-    <div class="row">
-      <div class="col-6">
-        <h3>Podsumowanie</h3>
-        <p>Wartość koszyka: {{ cartValue }} zł</p>
-      </div>
-      <div class="col-6">
-        <button (click)="clearCart()" class="btn btn-danger">Wyczyść koszyk</button>
-        <button (click)="checkout()" class="btn btn-success">Zamów</button>
+@if(products.length !=0) {
+  <div class="container">
+    <div class="card-table">
+      <div class="cart-product">
+        <table class="table table-responsive">
+          <thead>
+          <tr>
+            <th>Sr.No</th>
+            <th>Product Name</th>
+            <th>Product Image</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for(item of products; track $index) {
+              <tr>
+                <td>{{$index+1}}</td>
+                <td>{{item.title}}</td>
+                <td><img style="width: 120px;" src="{{item.image}}" alt=""></td>
+                <td style="width: 25%;">{{item.description}}</td>
+                <th style="width: 12%;">{{item.price}}</th>
+                <td style="width: 12%;">{{item.quantity}}</td>
+                <td style="width: 12%;">{{item.total}}</td>
+                <td>
+                  <button (click)="removeItem(item)" class="btn btn-danger"><i class="fas fa-trash-alt">Usun</i></button>
+                </td>
+              </tr>
+            }
+          <tr>
+            <td colspan="4"></td>
+            <td><button (click)="emptycart()" class="btn btn-danger">Empty Cart</button></td>
+            <td><button routerLink="/products" class="btn btn-primary">Shop More</button></td>
+            <td><button class="btn btn-success">Checkout</button></td>
+            <td><strong>Grand Total : ${{grandTotal}}</strong></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  }
-</div>
+  </div>
 
+}
 
+@if(products.length ==0) {
+  <div class="container">
+    <div class="card">
+      <h5 class="card-title">My Cart</h5>
+    </div>
+    <div class="center">
+      <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+      <h4>Your cart is empty!</h4>
+      <h6>Add item to it now</h6>
+      <button routerLink="/products" class="btn btn-primary">Shop Now</button>
+    </div>
+  </div>
+}

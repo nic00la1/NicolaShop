@@ -1,50 +1,46 @@
 import { Injectable } from '@angular/core';
-import {Product} from "../Shared/Modules/Product";
-import {CartItem} from "../Shared/Interfaces/cart-item";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  cart: CartItem[] = []; // Array of cart items
 
-  addToCart(product: Product, quantity: number) {
-    const item = this.cart.find(item => item.product.id === product.id);
-    if (product.stock > quantity) {
-      if (item) {
-        item.quantity += quantity;
-      } else {
-        this.cart.push({ product, quantity });
+  public cartItemList : any =[]
+  public productList = new BehaviorSubject<any>([]);
+  public search = new BehaviorSubject<string>("");
+
+  getProducts(){
+    return this.productList.asObservable();
+  }
+
+  setProduct(product : any){
+    this.cartItemList.push(...product);
+    this.productList.next(product);
+  }
+  addtoCart(product : any){
+    this.cartItemList.push(product);
+    this.productList.next(this.cartItemList);
+    this.getTotalPrice();
+    console.log(this.cartItemList)
+  }
+  getTotalPrice() : number{
+    let grandTotal = 0;
+    this.cartItemList.map((a:any)=>{
+      grandTotal += a.total;
+    })
+    return grandTotal;
+  }
+  removeCartItem(product: any){
+    this.cartItemList.map((a:any, index:any)=>{
+      if(product.id=== a.id){
+        this.cartItemList.splice(index,1);
       }
-      console.log(`Produkt: ${product.name} dodany do koszyka`);
-      product.stock -= quantity;
-    }
+    })
+    this.productList.next(this.cartItemList);
   }
-
-  removeFromCart(item: CartItem) {
-    const index = this.cart.indexOf(item);
-    if (index > -1) {
-      this.cart.splice(index, 1);
-      item.product.stock += item.quantity;
-    }
-  }
-
-  getCart() {
-    return this.cart; // Returns array of cart items
-  }
-
-  getTotal() {
-    return this.cart.reduce((total, item) =>
-      total + item.quantity, 0)
-  }
-
-  clearCart() {
-    this.cart = [];
-  }
-
-  checkout() {
-    // Send cart to server
-    console.log('Zamówienie złożone');
-    this.clearCart();
+  removeAllCart(){
+    this.cartItemList = []
+    this.productList.next(this.cartItemList);
   }
 }

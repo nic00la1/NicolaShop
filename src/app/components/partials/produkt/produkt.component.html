@@ -1,28 +1,42 @@
-<div class="container" style="margin-top: 80px">
-    <h1>Sklep</h1>
-
-    @for (product of products; track $index) {
-    <div class="m-4 border p-4">
-        <div class="row">
-            <div class="col-sm">
-                <img [src]="product.image" [alt]="product.name" style="width: 150px;"/>
-            </div>
-            <div class="col-sm ">
-                <h2>{{ product.name }}</h2>
-                <p>Cena: {{ product.price}} zł</p>
-            </div>
-            <div class="col-sm">
-                <p>Ilość: </p>
-          <input type="number" class="form-control" style="max-width: 200px;" [(ngModel)]="quantities[$index]"/>
-                <button (click)="addToCart(product, $index)" class="btn btn-primary mt-3">Dodaj do koszyka</button>
-                <button (click)="removeFromCart(product, $index)" class="btn btn-danger mt-3">Usuń z koszyka</button>
-              @if (product.stock === 0) {
-                <p class="text-danger fw-bold mt-2">Produkt niedostępny</p>
-              }
-            </div>
-        </div>
+<div class="card-top container-fluid">
+  <div class="container d-flex">
+    <div class="item">
+      <a (click)="filter('')">
+        <img src="https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100" alt="">
+        <h6>All products</h6>
+      </a>
     </div>
-    }
+    <div class="item">
+      <a (click)="filter('electronics')">
+        <img src="https://rukminim1.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100" alt="">
+        <h6>Electronics</h6>
+      </a>
+    </div>
+    <div class="item">
+      <a (click)="filter('fashion')">
+        <img src="https://rukminim1.flixcart.com/flap/128/128/image/82b3ca5fb2301045.png?q=100" alt="">
+        <h6>Fashion</h6>
+      </a>
+    </div>
+    <div class="item">
+      <a (click)="filter('jewelery')">
+        <img style="width: 62px; margin-top: 5px;" src="https://rukminim1.flixcart.com/image/580/696/kkh6zrk0/jewellery-set/o/w/z/gt-ns-862-matushri-art-original-imafzt9teacakjyn.jpeg?q=50" alt="">
+        <h6>Jewllery</h6>
+      </a>
+    </div>
+  </div>
 </div>
 
-
+<div class="container">
+  <div class="row">
+    @for(item of filterCategory | filter : searchKey : 'title'; track item. id) {
+        <div class="card col-md-3">
+          <img src="{{item.image}}" alt="">
+          <h5 style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{item.title}}</h5>
+          <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100ch;">{{item.description}}</p>
+          <p><strong>Price:</strong> ${{item.price}}</p>
+          <button class="btn btn-primary" (click)=addtocart(item)>Add to cart</button>
+        </div>
+    }
+  </div>
+</div>

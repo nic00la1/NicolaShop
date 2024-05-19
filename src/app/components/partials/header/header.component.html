@@ -1,11 +1,20 @@
-<nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">
-        <p>Nicola Shop</p>
-      </a>
-      <div class="navbar-item">
-        <img src="./assets/cart.png" alt="koszyk" routerLink="/cart">
-        <span> {{getTotal()}}</span>
+<header>
+  <div class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="navbar-brand align-item-center d-flex">
+      <i style="font-size: 40px;" class="fas fa-shipping-fast">&nbsp;
+
+      </i>
+      <strong style="font-size: 30px;">NicolaShop</strong>
+      <div class="form-group">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="search products">
       </div>
+      <span class="fas fa-search search-icon"></span>
+
+
     </div>
-  </nav>
+    <button routerLink="cart" class="btn btn-primary">
+      <i style="font-size: 30px;" class="fas fa-cart-plus"></i>
+      <div style="font-size: 10px;" class="badge bg-danger">{{totalItem}}</div>
+    </button>
+  </div>
+</header>

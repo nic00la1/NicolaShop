@@ -1,12 +1,13 @@
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
+.form-control {
+  border-radius: 3px;
+  width: 600px;
+  margin-left: 20px;
 }
 
-img {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
+.search-icon {
+  position: absolute;
+  z-index: 10;
+  right: 59%;
+  top: 20px;
+  color: blue;
 }

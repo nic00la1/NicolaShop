@@ -1,35 +1,32 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
-import {Product} from "../../../Shared/Modules/Product";
-import {CartItem} from "../../../Shared/Interfaces/cart-item";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent {
-  cartItems: CartItem[] = [];
-  cartService = inject(CartService);
-  ngOnInit() {
-    this.cartItems = this.cartService.getCart();
+export class CartComponent implements OnInit {
+
+  public products : any = [];
+  public grandTotal !: number;
+  constructor(private cartService : CartService) { }
+
+  ngOnInit(): void {
+    this.cartService.getProducts()
+      .subscribe(res=>{
+        this.products = res;
+        this.grandTotal = this.cartService.getTotalPrice();
+      })
+  }
+  removeItem(item: any){
+    this.cartService.removeCartItem(item);
+  }
+  emptycart(){
+    this.cartService.removeAllCart();
   }
 
-  removeFromCart(item: CartItem) {
-    this.cartService.removeFromCart(item);
-  }
-
-  cartValue() {
-    return this.cartService.getTotal();
-  }
-
-  clearCart() {
-    this.cartService.clearCart();
-  }
-
-  checkout() {
-    this.cartService.checkout();
-  }
 }
