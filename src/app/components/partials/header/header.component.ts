@@ -18,8 +18,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartService.getProducts()
-      .subscribe(res=>{
-        this.totalItem = res.length;
+      .subscribe(res => {
+        this.totalItem = res.reduce((total: any, item:any) => total + item.quantity, 0);
       })
   }
   search(event:any){
