@@ -13,9 +13,9 @@
             </div>
             <div class="col-sm">
                 <p>Ilość: </p>
-          <input type="number" class="form-control" style="max-width: 200px;" [(ngModel)]="quantity"/>
-                <button (click)="addToCart(product, quantity)" class="btn btn-primary mt-3">Dodaj do koszyka</button>
-                <button (click)="removeFromCart(product, quantity)" class="btn btn-danger mt-3">Usuń z koszyka</button>
+          <input type="number" class="form-control" style="max-width: 200px;" [(ngModel)]="quantities[$index]"/>
+                <button (click)="addToCart(product, $index)" class="btn btn-primary mt-3">Dodaj do koszyka</button>
+                <button (click)="removeFromCart(product, $index)" class="btn btn-danger mt-3">Usuń z koszyka</button>
               @if (product.stock === 0) {
                 <p class="text-danger fw-bold mt-2">Produkt niedostępny</p>
               }

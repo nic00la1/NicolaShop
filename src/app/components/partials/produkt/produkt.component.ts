@@ -17,11 +17,13 @@ export class ProduktComponent {
       new Product(2, 'Klawiatura Asus', 300, 'https://delkom.pl/pic3/9CEA/352168/klawiatura-mechaniczna-asus-rog-falchion-ace-90mp0346-bkua11-nx-red-rgb-compact-biala-png-720x.png', 15),
       new Product(3, 'Myszka Razer', 250, 'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_107701201?x=320&y=320&format=jpg&quality=80&sp=yes&strip=yes&trim&ex=320&ey=320&align=center&resizesource&unsharp=1.5x1+0.7+0.02&cox=0&coy=0&cdx=320&cdy=320', 5),
   ]
-  quantity: number = 1;
+  quantities: number[] = Array(this.products.length).fill(1); // Initialize quantities array with 1 for each product
 
   cartService = inject(CartService);
 
-  addToCart(product: Product, quantity: number) {
+  addToCart(product: Product, index: number) {
+    const quantity = this.quantities[index];
+
     // Check if the quantity requested is available in stock
     if (product.stock < quantity) {
       console.error(`Requested quantity for product ${product.name} is not available in stock.`);
@@ -41,7 +43,9 @@ export class ProduktComponent {
     product.stock -= quantity;
   }
 
-  removeFromCart(product: Product, quantity: number) {
+  removeFromCart(product: Product, index: number) {
+    const quantity = this.quantities[index];
+
     const item = this.cartService.getCart().find(item => item.product.id === product.id);
     if (item) {
       // Check if the quantity to remove is less than or equal to the quantity in the cart
