@@ -22,13 +22,42 @@ export class ProduktComponent {
   cartService = inject(CartService);
 
   addToCart(product: Product, quantity: number) {
-    this.cartService.addToCart(product, this.quantity);
+    // Check if the quantity requested is available in stock
+    if (product.stock < quantity) {
+      console.error(`Requested quantity for product ${product.name} is not available in stock.`);
+      return;
+    }
+    // Check if the product is already in the cart
+    const item = this.cartService.getCart().find(item => item.product.id === product.id);
+    if (item) {
+      // If the product is already in the cart, update the quantity
+      item.quantity += quantity;
+    } else {
+      // If the product is not in the cart, add it
+      this.cartService.addToCart(product, quantity);
+    }
+
+    // Update the stock of the product
+    product.stock -= quantity;
   }
 
   removeFromCart(product: Product, quantity: number) {
     const item = this.cartService.getCart().find(item => item.product.id === product.id);
     if (item) {
-      this.cartService.removeFromCart(item);
+      // Check if the quantity to remove is less than or equal to the quantity in the cart
+      if (item.quantity >= quantity) {
+        // If it is, update the quantity
+        item.quantity -= quantity;
+        // If the quantity in the cart is 0, remove the product from the cart
+        if (item.quantity === 0) {
+          this.cartService.removeFromCart(item);
+        }
+      } else {
+        console.error(`Requested quantity to remove for product ${product.name} is greater than quantity in the cart.`);
+      }
+
+      // Update the stock of the product
+      product.stock += quantity;
     }
   }
 }

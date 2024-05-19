@@ -12,7 +12,7 @@ import {CartService} from "../../../services/cart.service";
 export class HeaderComponent {
 cartService = inject(CartService);
 
-getCart() {
-  return this.cartService.getCart();
+getTotal() {
+  return this.cartService.getTotal();
 }
 }
